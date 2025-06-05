@@ -114,6 +114,10 @@
     align-items: center;
     
 }
+.holdert1 p{
+    font-family: Cambria;
+}
+
 #middleimg{
     width: 150px;
     height: auto;
