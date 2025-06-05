@@ -1,12 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PDF Viewer</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+  </style>
+</head>
+<body>
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const file = params.get("file");
+  <iframe id="pdfViewer" title="PDF Viewer"></iframe>
 
-if (file) {
-  // Updated path to include your biology folder
-  document.getElementById("pdfViewer").src = `/public-pdfs-biology/${file}`;
-} else {
-  document.body.innerHTML = "<p>No file selected.</p>";
-}
-</script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get("file");
+
+    if (file) {
+      // Load the PDF file inside the iframe from /pdfs/
+      document.getElementById("pdfViewer").src = `/pdfs/${file}`;
+    } else {
+      document.body.innerHTML = "<h2>No file selected.</h2>";
+    }
+  </script>
+
+</body>
+</html>
