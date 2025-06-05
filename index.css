@@ -50,7 +50,7 @@
     
     width: 60%;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 10px;
     padding: 30px;
 
     background-color: rgba(235, 240, 245, 0.297);
@@ -101,6 +101,7 @@
     align-items: center; /* vertical alignment */
     gap: 20px;            /* space between image and text */
     max-width: 800px;
+    padding: 20px 0px;
     margin: 20px auto;
 }
 .holdert1{
