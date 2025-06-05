@@ -140,7 +140,8 @@
     height: auto;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* allow boxes to wrap instead of stretching out */
+  gap: 10px; /* space between boxes */
     justify-content: space-evenly;
     align-items: center;
 
