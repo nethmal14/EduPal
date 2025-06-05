@@ -3,9 +3,7 @@
     overflow-x: hidden;
 }
 
-*, *::before, *::after {
-  box-sizing: inherit;
-}
+
 
 /*Vanta*/
 .vanta-canvas{
