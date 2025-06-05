@@ -3,8 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <title>PDF Library</title>
+  <link rel="stylesheet" href="grades.css">
+ 
 </head>
+
+
 <body>
+  <div class="pdf-list">
+    <div class="pdf-container">
+      <div class="pdf-box">
+        <a href="">1</a>
+      </div>
+      <div class="pdf-box">
+        <a href="">1</a>
+      </div>
+      <div class="pdf-box">
+        <a href="">1</a>
+      </div>
+      <div class="pdf-box">
+        <a href="">1</a>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+
 
   <h1>PDF Library</h1>
   <input id="searchInput" placeholder="Search by title or tag..." />
@@ -17,69 +42,27 @@
         </a>
       </div>
       <div class="pdf-select">
-        <a href="/view-pdf.html?file=biology/2022-AL-Biology-Past-Paper-English-Medium%20(1).pdf" target="_blank">
+        <a href="/view-pdf.html?file=biology/2023-AL-Biology-Past-Paper-English-Medium.pdf" target="_blank">
           View 2023 Biology Paper
         </a>
       </div>
       <div class="pdf-select">
-        <a href="/view-pdf.html?file=biology/2022-AL-Biology-Past-Paper-English-Medium%20(1).pdf" target="_blank">
+        <a href="/view-pdf.html?file=biology/2024-AL-Biology-Past-Paper-English-Medium.pdf" target="_blank">
           View 2024 Biology Paper
         </a>
       </div>
       <div class="pdf-select">
-        <a href="/view-pdf.html?file=biology/2022-AL-Biology-Past-Paper-English-Medium%20(1).pdf" target="_blank">
+        <a href="/view-pdf.html?file=biology/2021-AL-Biology-Past-Paper-English-Medium.pdf" target="_blank">
           View 2021 Biology Paper
         </a>
       </div>
       <div class="pdf-select">
-        <a href="/view-pdf.html?file=biology/2022-AL-Biology-Past-Paper-English-Medium%20(1).pdf" target="_blank">
+        <a href="/view-pdf.html?file=biology/2020-AL-Biology-Past-Paper-English-Medium.pdf" target="_blank">
           View 2020 Biology Paper
         </a>
       </div>
     </div>
   </div>
-
-  <style>
-    /* Make container flexible */
-.grade-select {
-  display: flex;
-  flex-wrap: wrap; /* Allow boxes to wrap on smaller screens */
-  justify-content: center; /* center boxes */
-  gap: 10px;
-  max-width: 100%;
-  padding: 0 10px;
-  box-sizing: border-box;
-}
-
-/* Boxes flexibly sized */
-.grade-select-box {
-  flex: 1 1 200px; /* flexible basis, min width 200px */
-  max-width: 250px; /* max width */
-  box-sizing: border-box;
-}
-
-/* Images scale inside boxes */
-.gsb-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Responsive text & padding */
-body, .grade-select-box {
-  font-size: 1rem;
-  padding: 10px;
-}
-
-/* Media query for smaller screens */
-@media (max-width: 600px) {
-  .grade-select-box {
-    flex: 1 1 100%; /* take full width on small screens */
-    max-width: 100%;
-  }
-}
-
-  </style>
 
 </body>
 </html>
