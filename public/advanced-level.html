@@ -40,29 +40,45 @@
   </div>
 
   <style>
-    .pdfList{
-      width: 100%;
-      display: flex;
+    /* Make container flexible */
+.grade-select {
+  display: flex;
+  flex-wrap: wrap; /* Allow boxes to wrap on smaller screens */
+  justify-content: center; /* center boxes */
+  gap: 10px;
+  max-width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
 
-    }
-    .AL-pdf{
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      gap:20px;
-    }
-    .pdf-select{
-      width: 200px;
-      height: 200px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: grey;
-      border: solid 1px black;
-      border-radius: 25px;
+/* Boxes flexibly sized */
+.grade-select-box {
+  flex: 1 1 200px; /* flexible basis, min width 200px */
+  max-width: 250px; /* max width */
+  box-sizing: border-box;
+}
 
-    }
+/* Images scale inside boxes */
+.gsb-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive text & padding */
+body, .grade-select-box {
+  font-size: 1rem;
+  padding: 10px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+  .grade-select-box {
+    flex: 1 1 100%; /* take full width on small screens */
+    max-width: 100%;
+  }
+}
+
   </style>
 
 </body>
