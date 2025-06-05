@@ -1,24 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tool Hub</title>
+    <meta charset="UTF-8" />
+    <!-- public/index.html -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>html factory</title>
+    <link rel="stylesheet" href="/src/htmlfactory.css">
 </head>
 <body>
-  <h1>Welcome to Tool Hub</h1>
-  <p>Try out some of our tools below:</p>
+    <div id="upper-main" class="upper-main">
+      <div class="header">
+        <img href="./html factory.html" src="./images/logo1.png" alt="" class="logo">
+        <ul class="nav-menu">
+          <a href="#">Home</a>
+          <a href="#">Tools</a>
+        </ul>
+      </div>
+      <div class="hero">
+        <div class="intro">
+            <h2>Welcome to PaperPal</h2>
+            <p>📚 Welcome to PaperPal LK – Your ultimate past paper partner!📝 Upload, study, and revise A/L and O/L papers effortlessly.
+⚡ Fast access, 🔍 smart search, and 📂 organized resources – all in one place.
+💡 Study smart. Score higher. With PaperPal LK! </p>
+        </div>
+        <section class="searchbart1">
+          <input type="text"placeholder=" 🔍Search what you need "/>
+        </section>
 
-  <h2>🧮 Online Calculator</h2>
-  <a href="calculator.html">Open Calculator</a>
+      </div>
+    </div>
 
-  <h2>📄 Downloadable PDF</h2>
-  <a href="files/sample.pdf" download>Download Sample PDF</a>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+<script>
+  VANTA.FOG({
+    el: "#upper-main",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    highlightColor: 0x86a4bd,
+    midtoneColor: 0x48b4ff,
+    lowlightColor: 0xc8fffa,
+    baseColor: 0xffffff,
+    blurFactor: 0.67,
+    speed: 2.50,
+    zoom: 0.60
+  })
 
-  <h2>🧰 Coming Soon Tools</h2>
-  <ul>
-    <li>Unit Converter</li>
-    <li>QR Code Generator</li>
-  </ul>
+</script>
+    <div class="middle-lower">
+      <div class="holdert1">
+        <img id="middleimg" src="./images/middleimg.png" alt="">
+        <p>📚✨ PaperPal LK isn't just for past papers — we also offer powerful study tools to boost your learning! 🧠🛠️
+        </p> 
+      </div>
+    </div>
+  
+    <div class="lower-main">
+      <div class="grid">
+        <img src="./images/g1.png" alt="Image 1">
+        <img src="./images/g2.png" alt="Image 2">
+        <img src="./images/g3.png" alt="Image 3">
+        <img src="./images/g4.png" alt="Image 4">
+  </div>
+    </div>
+
+
 </body>
 </html>
