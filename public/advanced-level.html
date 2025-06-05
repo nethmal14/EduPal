@@ -3,12 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <title>PDF Library</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 700px; margin: 20px auto; }
-    .pdf-item { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
-    .tags { font-size: 0.9em; color: #555; }
-    input { padding: 8px; width: 100%; margin-bottom: 20px; }
-  </style>
 </head>
 <body>
 
@@ -17,52 +11,11 @@
 
   <div id="pdfList"></div>
 
-  <script>
-    // Your data - you can also load this from an external JSON file
-    const pdfs = [
-      {
-        title: "2023 Physics A/L Paper",
-        file: "/pdfs/physics-2023.pdf",
-        tags: ["physics", "A/L", "past paper"],
-        category: "Past Papers",
-        description: "Final A/L physics paper from 2023."
-      },
-      {
-        title: "Chemistry Revision Paper",
-        file: "/pdfs/chemistry-revision.pdf",
-        tags: ["chemistry", "revision"],
-        category: "Revision",
-        description: "MCQ + essay paper for revision."
-      }
-    ];
-
-    const pdfListEl = document.getElementById('pdfList');
-    const searchInput = document.getElementById('searchInput');
-
-    function renderList(filter = '') {
-      const filterLower = filter.toLowerCase();
-      const filtered = pdfs.filter(pdf =>
-        pdf.title.toLowerCase().includes(filterLower) ||
-        pdf.tags.some(tag => tag.toLowerCase().includes(filterLower)) ||
-        pdf.category.toLowerCase().includes(filterLower)
-      );
-
-      pdfListEl.innerHTML = filtered.map(pdf => `
-        <div class="pdf-item">
-          <h3>${pdf.title}</h3>
-          <p>${pdf.description}</p>
-          <p class="tags">Tags: ${pdf.tags.join(', ')} | Category: ${pdf.category}</p>
-          <a href="${pdf.file}" target="_blank" download>View / Download PDF</a>
-        </div>
-      `).join('') || '<p>No results found.</p>';
-    }
-
-    searchInput.addEventListener('input', (e) => {
-      renderList(e.target.value);
-    });
-
-    renderList(); // initial render
-  </script>
+  <div class="AL-pdf">
+    <div class="pdf-select">
+      <a href="/view-pdf.html?file=public\pdfs\biology\2022-AL-Biology-Past-Paper-English-Medium (1).pdf"></a>
+    </div>
+  </div>
 
 </body>
 </html>

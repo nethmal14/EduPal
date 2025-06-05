@@ -1,0 +1,12 @@
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const file = params.get("file");
+
+if (file) {
+  // Updated path to include your biology folder
+  document.getElementById("pdfViewer").src = `/public-pdfs-biology/${file}`;
+} else {
+  document.body.innerHTML = "<p>No file selected.</p>";
+}
+</script>
