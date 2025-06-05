@@ -2,20 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PDF Viewer</title>
+  <title>PDF Viewer with Header</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
     }
     iframe {
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: calc(100vh - 60px); /* full height minus header */
       border: none;
+      display: block;
     }
   </style>
 </head>
 <body>
+
+  <header>
+    <h1>Biology Past Paper PDF Viewer</h1>
+    <button onclick="window.history.back()">Go Back</button>
+  </header>
 
   <iframe id="pdfViewer" title="PDF Viewer"></iframe>
 
@@ -24,10 +35,9 @@
     const file = params.get("file");
 
     if (file) {
-      // Load the PDF file inside the iframe from /pdfs/
       document.getElementById("pdfViewer").src = `/pdfs/${file}`;
     } else {
-      document.body.innerHTML = "<h2>No file selected.</h2>";
+      document.body.innerHTML = "<h2>No PDF selected.</h2>";
     }
   </script>
 
