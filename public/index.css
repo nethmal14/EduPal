@@ -132,6 +132,8 @@
 */
 .lower-main{
     width: 100%;
+    max-width: 100vw; /* ensure container never exceeds viewport width */
+    overflow-x: hidden;
 }
 .grade-select{
     width: 100%;
