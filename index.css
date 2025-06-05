@@ -1,39 +1,143 @@
-.App {
-  text-align: center;
+*{
+    margin: 0px;
+}
+/*Vanta*/
+.vanta-canvas{
+    padding-bottom: 30px !important;
+}
+.upper-main{
+    width: 100%;
+    height: fit-content;
+    padding-bottom: 30px;
+    z-index: 1;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    /*background-color: rgba(235, 240, 245, 0.297);
+    backdrop-filter: blur(15px);
+    border-bottom:solid 1px rgba(255, 255, 255, 0.295) ;*/
+    z-index: 1;
+}
+.header .logo{
+    width: 50px;
+}
+.header .nav-menu{
+    margin:0px 10px;
+}
+.header a{
+    text-decoration: none;
+    color: black;
+    margin-right: 20px;
+    font-size: 15px;
+    font-family: verdana;
+}
+.hero{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    
+}
+.intro{
+    
+    width: 60%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 30px;
+
+    background-color: rgba(235, 240, 245, 0.297);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    border:solid 1px rgba(255, 255, 255, 0.295) ;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.107);
+    
+    
+}
+.intro h2{
+    text-align: center;
+    font-size: 28px;
+    font-family: monospace;
+
+}
+.intro p{
+    font-size: 20px;
+    font-family: monospace;
+
+}
+.searchbart1{
+    width: 100%;
+    display: flex;
+    
+    margin-bottom: 30px;
+    
+}
+.searchbart1 input{
+    width:60%;
+    padding: 20px 30px;
+    margin: auto;
+    background-color: rgba(235, 240, 245, 0.297);
+    backdrop-filter: blur(15px);
+    border: solid 1px rgba(224, 232, 255, 0.629);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.107);
+    
+}
+.searchbart1 input:hover{
+    box-shadow: 0 10px 40px rgba(239, 238, 238, 0.581);
+    border: solid 1px rgba(143, 169, 247, 0.66);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.middle-lower{
+    display: flex;
+    align-items: center; /* vertical alignment */
+    gap: 20px;            /* space between image and text */
+    max-width: 800px;
+    margin: 20px auto;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.holdert1{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#middleimg{
+    width: 150px;
+    height: auto;
+    border-radius: 8px; 
+    margin: 5px;
 }
-
-.App-link {
-  color: #61dafb;
+.middle-lower p{
+    width: 50%;
+    margin: 5px;
+    font-size: 15px;
+    font-family: BlinkMacSystemFont;
+    
+  
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/*font-family: "SF Pro Text", "Myriad Set Pro", "SF Pro Icons", "Apple Legacy Chevron", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+*/
+.lower-main{
+    width: 100%;
 }
-
+.lower-main .grid{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    gap: 16px;
+}
+.lower-main .grid img{
+    width: 20%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
