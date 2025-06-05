@@ -1,6 +1,12 @@
 *{
     margin: 0px;
+    overflow-x: hidden;
 }
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
 /*Vanta*/
 .vanta-canvas{
     padding-bottom: 30px !important;
