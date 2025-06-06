@@ -144,12 +144,12 @@
     height: auto;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap; /* allow boxes to wrap instead of stretching out */
+    flex-wrap: nowrap; /* allow boxes to wrap instead of stretching out */
   gap: 10px; /* space between boxes */
     justify-content: space-evenly;
     align-items: center;
 
-    padding: 50px 0px;
+    padding: 0 0px;
 
    
 
@@ -161,7 +161,8 @@
     margin: auto;
 }
 .gsb-img{
-    width: 300px;
+    min-width: 50px;
+    max-width: 200px;
     margin: 10px 0px;
     border-radius: 100px;
 
