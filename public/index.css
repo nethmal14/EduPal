@@ -6,7 +6,7 @@ body{
 }
 .header{
     position: fixed;
-    top: 40px;
+    top: 20px;
     z-index: 10;
 
     width: 300px;
@@ -43,7 +43,7 @@ body{
     justify-content: center;
     align-items: center;
 
-    margin-top: 60px;
+    margin-top: 40px;
 }
 .card{
     max-width: 80%;
