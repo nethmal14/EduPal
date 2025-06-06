@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Library</title>
+  <link rel="stylesheet" href="grades.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="pdflist">
+    <h1>Advanced Level Papers</h1>
+    <section class="searchbart2">
+      <input id="search2" type="text" placeholder=" 🔍Search what you need " />
+    </section>
+    <div class="pdfcontainer" id="pdfcontainer">
+      <div class="pdfbox">
+        <a href="#">1</a>
+      </div>
+      <div class="pdfbox">
+        <a href="#">2</a>
+      </div>
+      <div class="pdfbox">
+        <a href="#">3</a>
+      </div>
+      <div class="pdfbox">
+        <a href="#">4</a>
+      </div>
+      <div class="pdfbox">
+        <a href="#">5</a>
+      </div>
+      <div class="pdfbox">
+        <a href="#">5</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById("search2");
+const items = document.querySelectorAll("#pdfcontainer .pdfbox");
+
+searchInput.addEventListener("input", () => {
+  const term = searchInput.value.toLowerCase();
+
+  items.forEach(box => {
+    const text = box.textContent.toLowerCase();
+    const isMatch = text.includes(term);
+    box.style.display = isMatch ? "flex" : "none"; // ✅ "flex" not "block" to keep layout
+  });
+});
+
+  </script>
+</body>
+</html>
