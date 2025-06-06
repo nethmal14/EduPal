@@ -6,7 +6,7 @@
 .pdflist{
   width: 100%;
   height: auto;
-  background-image: url(/public/images/stacked-steps-haikei.png);
+  background-image: url(/images/stacked-steps-haikei.png);
   display: flex;
   flex-direction: column;
   justify-content: center;
