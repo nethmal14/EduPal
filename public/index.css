@@ -140,7 +140,7 @@
     overflow-x: hidden;
 }
 .grade-select{
-    width: 100%;
+    width: 80%;
     height: auto;
     display: flex;
     flex-direction: row;
