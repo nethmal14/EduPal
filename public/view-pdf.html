@@ -31,18 +31,36 @@
       bottom: 30px;
       z-index: 10;
       width: 80%;
-      height: 100px;
+      height: auto;
       display: flex;
+      flex-direction: column;
+      overflow-y: auto;
       justify-content: center;
       align-items: center;
       background-color: rgba(255, 255, 255, 0);
       backdrop-filter: blur(25px);
       border-radius: 50px;
       box-shadow: 0 0 50px 5px rgba(0, 0, 0, 0.351);
+
+      font-family: monospace;
     }
     .tool-menu button{
-      padding: 10px 50px;
+      padding: 30px 50px;
+      font-size: 20px;
+      background-color: rgba(240, 248, 255, 0);
+      border: none;
     }
+    #equations {
+    display: none;
+    margin-top: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-y: auto;
+    width: auto;
+  }
+
+
+
     #pdf-container {
       margin: 10px 0;
       flex: 1 1 auto;
@@ -64,7 +82,16 @@
 </head>
 <body>
     <div class="tool-menu">
-      <button>TOOLS</button>
+      <div id="equations">
+        <h3>Useful Equations</h3>
+        <p>E = mc²</p>
+        <p>a² + b² = c²</p>
+
+        <h4>Trigonometry Table</h4>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Trigonometric_functions_table.png/320px-Trigonometric_functions_table.png" alt="Trigonometry Table" />
+      </div>
+      <button id="toggle-btn">TOOLS</button>
+      
     </div>
 
   <header>
@@ -115,6 +142,21 @@
       });
     }
   </script>
+
+  <script>
+  const toggleBtn = document.getElementById('toggle-btn');
+  const equationsDiv = document.getElementById('equations');
+
+  toggleBtn.addEventListener('click', () => {
+    if (equationsDiv.style.display === 'none' || equationsDiv.style.display === '') {
+      equationsDiv.style.display = 'block';
+      toggleBtn.textContent = 'Hide Tools';
+    } else {
+      equationsDiv.style.display = 'none';
+      toggleBtn.textContent = 'Tools';
+    }
+  });
+    </script>
 
 </body>
 </html>
