@@ -15,16 +15,16 @@
     }
     iframe {
       width: 80%;
-      height: calc(100vh - 60px); /* full height minus header */
+      height: calc(100vh - 60px);
       border: none;
       display: block;
+      margin: auto;
     }
   </style>
 </head>
 <body>
 
   <header>
-    
     <button onclick="window.history.back()">Go Back</button>
   </header>
 
@@ -35,7 +35,7 @@
     const file = params.get("file");
 
     if (file) {
-      document.getElementById("pdfViewer").src = `/pdfs/${file}`;
+      document.getElementById("pdfViewer").src = file;
     } else {
       document.body.innerHTML = "<h2>No PDF selected.</h2>";
     }
