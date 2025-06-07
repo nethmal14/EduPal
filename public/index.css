@@ -5,8 +5,8 @@ body{
     position: relative;
 }
 .header{
-    position: static;
-    top: 0px;
+    position: fixed ;
+    top: 20px;
     z-index: 10;
 
     width: 300px;
@@ -43,7 +43,7 @@ body{
     justify-content: center;
     align-items: center;
 
-    margin-top: 0px;
+    margin-top: 20px;
 }
 .card{
     max-width: 80%;
