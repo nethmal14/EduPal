@@ -2,23 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PDF Viewer with Header</title>
+  <title>PDF Viewer with Header - All Pages</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
     header {
       padding: 10px 20px;
       background: #007bff;
       color: white;
+      flex: 0 0 auto;
     }
-    iframe {
-      width: 80%;
-      height: calc(100vh - 60px);
-      border: none;
-      display: block;
-      margin: auto;
+    #pdf-container {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      background: #eee;
+      padding: 10px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    canvas {
+      border: 1px solid #000;
+      margin: 10px 0;
+      max-width: 80%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      height: auto !important;
     }
   </style>
 </head>
@@ -28,16 +41,45 @@
     <button onclick="window.history.back()">Go Back</button>
   </header>
 
-  <iframe id="pdfViewer" title="PDF Viewer"></iframe>
+  <div id="pdf-container"></div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
     const file = params.get("file");
 
-    if (file) {
-      document.getElementById("pdfViewer").src = file;
-    } else {
+    if (!file) {
       document.body.innerHTML = "<h2>No PDF selected.</h2>";
+    } else {
+      const container = document.getElementById('pdf-container');
+
+      pdfjsLib.getDocument(file).promise.then(pdf => {
+        const pageCount = pdf.numPages;
+
+        // Render all pages
+        for (let pageNum = 1; pageNum <= pageCount; pageNum++) {
+          pdf.getPage(pageNum).then(page => {
+            const scale = 1.5;
+            const viewport = page.getViewport({ scale });
+
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            // Append canvas to container
+            container.appendChild(canvas);
+
+            const renderContext = {
+              canvasContext: context,
+              viewport: viewport
+            };
+            page.render(renderContext);
+          });
+        }
+      }).catch(err => {
+        document.body.innerHTML = `<h2>Error loading PDF: ${err.message}</h2>`;
+      });
     }
   </script>
 
