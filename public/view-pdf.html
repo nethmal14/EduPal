@@ -9,7 +9,10 @@
       font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
+      position: relative;
     }
     header {
       padding: 10px 20px;
@@ -27,7 +30,7 @@
     .tool-menu{
       position: fixed;
       bottom: 30px;
-
+      z-index: 10;
       width: 80%;
       height: 100px;
       display: flex;
@@ -61,15 +64,16 @@
   </style>
 </head>
 <body>
+    <div class="tool-menu">
+      <button>TOOLS</button>
+    </div>
 
   <header>
     <button onclick="window.history.back()">Go Back</button>
   </header>
    
   <div class="master-container">
-    <div class="tool-menu">
-      <button>TOOLS</button>
-    </div>
+    
     <div id="pdf-container"></div>
   </div>
 
