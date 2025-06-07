@@ -26,7 +26,7 @@ body{
     font-family: monospace;
 }
 .main-holder{
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;
