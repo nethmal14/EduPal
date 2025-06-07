@@ -17,7 +17,32 @@
       color: white;
       flex: 0 0 auto;
     }
+    .master-container{
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tool-menu{
+      position: fixed;
+      bottom: 30px;
+
+      width: 80%;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0);
+      backdrop-filter: blur(25px);
+      border-radius: 50px;
+      box-shadow: 0 0 50px 5px rgba(0, 0, 0, 0.351);
+    }
+    .tool-menu button{
+      padding: 10px 50px;
+    }
     #pdf-container {
+      margin: 10px 50px;
       flex: 1 1 auto;
       overflow-y: auto;
       background: #eee;
@@ -40,8 +65,13 @@
   <header>
     <button onclick="window.history.back()">Go Back</button>
   </header>
-
-  <div id="pdf-container"></div>
+   
+  <div class="master-container">
+    <div class="tool-menu">
+      <button>TOOLS</button>
+    </div>
+    <div id="pdf-container"></div>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
   <script>
