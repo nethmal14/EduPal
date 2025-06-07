@@ -6,7 +6,7 @@ body{
 }
 .header{
     position: static;
-    top: 20px;
+    top: 0px;
     z-index: 10;
 
     width: 300px;
