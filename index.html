@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECHO — Secure Comms</title>
+  <meta name="description" content="ECHO secure communication platform">
+  <meta name="theme-color" content="#0e0e11">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-card">
+      <div class="login-logo">
+        <span class="logo-icon">📡</span>
+        <h1>ECHO</h1>
+        <p>Secure Communications</p>
+      </div>
+
+      <!-- Step 1: Callsign selection -->
+      <div id="step-callsign">
+        <div class="form-group">
+          <label>Select your callsign</label>
+          <div class="callsign-grid" id="callsign-grid"></div>
+        </div>
+        <button class="btn-primary" id="btn-next" disabled>Continue →</button>
+      </div>
+
+      <!-- Step 2: Password -->
+      <div id="step-password" style="display:none">
+        <p id="first-login-notice" class="first-login-notice" style="display:none">
+          🔐 First login — set your password
+        </p>
+        <div class="form-group">
+          <label id="password-label">Password</label>
+          <input type="password" class="form-input" id="password-input"
+            placeholder="Enter your password" autocomplete="current-password">
+        </div>
+        <div id="confirm-password-group" class="form-group" style="display:none">
+          <label>Confirm password</label>
+          <input type="password" class="form-input" id="confirm-input"
+            placeholder="Confirm password" autocomplete="new-password">
+        </div>
+        <div class="remember-row">
+          <input type="checkbox" id="remember-me" checked>
+          <label for="remember-me">Remember me on this device</label>
+        </div>
+        <button class="btn-primary" id="btn-login">Sign In</button>
+        <button class="btn-primary" id="btn-register" style="display:none; margin-top:8px; background:#3ddc97; box-shadow: 0 4px 16px rgba(61,220,151,0.3)">
+          Set Password & Enter
+        </button>
+        <div id="login-status" class="login-status-msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { CALLSIGNS } from './js/firebase-config.js';
+    import { isFirstLogin, register, login, onAuth } from './js/auth.js';
+
+    // If already logged in, go to app
+    onAuth((user) => {
+      if (user) window.location.href = '/app.html';
+    });
+
+    let selectedCallsign = null;
+    let firstLogin = false;
+
+    // Render callsign buttons
+    const grid = document.getElementById('callsign-grid');
+    CALLSIGNS.forEach(cs => {
+      const btn = document.createElement('button');
+      btn.className = 'callsign-btn';
+      btn.textContent = cs;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.callsign-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedCallsign = cs;
+        document.getElementById('btn-next').disabled = false;
+      });
+      grid.appendChild(btn);
+    });
+
+    // Next button → check first login
+    document.getElementById('btn-next').addEventListener('click', async () => {
+      if (!selectedCallsign) return;
+      const btn = document.getElementById('btn-next');
+      btn.disabled = true;
+      btn.textContent = 'Checking…';
+
+      try {
+        firstLogin = await isFirstLogin(selectedCallsign);
+      } catch (e) {
+        firstLogin = true;
+      }
+
+      document.getElementById('step-callsign').style.display = 'none';
+      document.getElementById('step-password').style.display = 'block';
+
+      if (firstLogin) {
+        document.getElementById('first-login-notice').style.display = 'block';
+        document.getElementById('password-label').textContent = 'Create password';
+        document.getElementById('confirm-password-group').style.display = 'block';
+        document.getElementById('password-input').placeholder = 'Choose a strong password';
+        document.getElementById('btn-login').style.display = 'none';
+        document.getElementById('btn-register').style.display = 'block';
+      }
+
+      document.getElementById('password-input').focus();
+      btn.disabled = false;
+      btn.textContent = 'Continue →';
+    });
+
+    // Sign in (returning user)
+    document.getElementById('btn-login').addEventListener('click', () => doLogin());
+    document.getElementById('password-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') doLogin();
+    });
+
+    async function doLogin() {
+      const pw = document.getElementById('password-input').value;
+      const remember = document.getElementById('remember-me').checked;
+      if (!pw) return showStatus('Enter your password', 'error');
+
+      setLoading(true, 'btn-login');
+      try {
+        await login(selectedCallsign, pw, remember);
+        showStatus('✓ Authenticated', 'success');
+        setTimeout(() => window.location.href = '/app.html', 600);
+      } catch (err) {
+        showStatus('Authentication failed. Check your password.', 'error');
+        setLoading(false, 'btn-login', 'Sign In');
+      }
+    }
+
+    // Register (first-time user)
+    document.getElementById('btn-register').addEventListener('click', () => doRegister());
+
+    async function doRegister() {
+      const pw = document.getElementById('password-input').value;
+      const confirm = document.getElementById('confirm-input').value;
+      const remember = document.getElementById('remember-me').checked;
+      if (!pw) return showStatus('Enter a password', 'error');
+      if (pw.length < 6) return showStatus('Password must be at least 6 characters', 'error');
+      if (pw !== confirm) return showStatus('Passwords do not match', 'error');
+
+      setLoading(true, 'btn-register');
+      try {
+        await register(selectedCallsign, pw);
+        if (!remember) {
+          // Login with session persistence
+          await login(selectedCallsign, pw, false);
+        }
+        showStatus('✓ Account created. Entering…', 'success');
+        setTimeout(() => window.location.href = '/app.html', 800);
+      } catch (err) {
+        showStatus('Error: ' + (err.message || 'Could not create account'), 'error');
+        setLoading(false, 'btn-register', 'Set Password & Enter');
+      }
+    }
+
+    function showStatus(msg, type) {
+      const el = document.getElementById('login-status');
+      el.textContent = msg;
+      el.className = `login-status-msg show ${type}`;
+    }
+
+    function setLoading(loading, btnId, resetText = '') {
+      const btn = document.getElementById(btnId);
+      btn.disabled = loading;
+      if (loading) btn.textContent = 'Please wait…';
+      else btn.textContent = resetText;
+    }
+  </script>
+</body>
+</html>

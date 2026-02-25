@@ -1,0 +1,33 @@
+{
+    "rules": {
+        "users": {
+            "$callsign": {
+                ".read": "auth != null",
+                ".write": "auth != null && (root.child('users').child($callsign).child('uid').val() === auth.uid || !data.exists())"
+            }
+        },
+        "profiles": {
+            "$uid": {
+                ".read": "auth != null",
+                ".write": "auth != null && auth.uid === $uid"
+            }
+        },
+        "chats": {
+            "$chatId": {
+                ".read": "auth != null && data.child('members').child(root.child('profiles').child(auth.uid).child('callsign').val()).exists()",
+                ".write": "auth != null && (data.child('members').child(root.child('profiles').child(auth.uid).child('callsign').val()).exists() || !data.exists())",
+                "messages": {
+                    "$messageId": {
+                        ".write": "auth != null && data.child('members').child(root.child('profiles').child(auth.uid).child('callsign').val()).exists()"
+                    }
+                }
+            }
+        },
+        "presence": {
+            "$uid": {
+                ".read": "auth != null",
+                ".write": "auth != null && auth.uid === $uid"
+            }
+        }
+    }
+}
