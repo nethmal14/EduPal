@@ -123,7 +123,7 @@ window.addEventListener('openChat', (e) => {
     const { chatId } = e.detail;
     if (currentChatData[chatId]) activateChat(chatId);
 });
-});
+
 
 // ─── Sidebar ─────────────────────────────────────────────────────────────────
 

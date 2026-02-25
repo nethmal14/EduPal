@@ -1,5 +1,6 @@
 import { firebaseConfig, CALLSIGNS, callsignToEmail } from './firebase-config.js';
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js';
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -13,10 +14,11 @@ import {
 import { getDatabase, ref, get, set } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js';
 
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-export { app, auth, db };
+export { app, auth, db, analytics };
 
 /**
  * Check if a callsign has already set a password (first-time login vs returning)
