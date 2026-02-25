@@ -4,16 +4,37 @@ import { CALLSIGNS } from './firebase-config.js';
 
 let currentCallsign = null;
 let onGroupCreatedCallback = null;
+let initialized = false;
 
 export function initGroups(callsign, onCreated) {
-    currentCallsign = callsign;
-    onGroupCreatedCallback = onCreated;
-    document.getElementById('btn-new-group').addEventListener('click', openCreateGroupModal);
-    document.getElementById('group-modal-close').addEventListener('click', closeGroupModal);
-    document.getElementById('group-form').addEventListener('submit', handleCreateGroup);
-    document.getElementById('group-modal-overlay').addEventListener('click', (e) => {
-        if (e.target === document.getElementById('group-modal-overlay')) closeGroupModal();
+    if (callsign) {
+        console.log(`[Groups] Initializing with callsign: ${callsign}`);
+        currentCallsign = callsign;
+    }
+    if (onCreated) onGroupCreatedCallback = onCreated;
+
+    if (initialized) return;
+    initialized = true;
+
+    console.log('[Groups] Attaching UI listeners...');
+    const newGroupBtn = document.getElementById('btn-new-group');
+    if (newGroupBtn) newGroupBtn.addEventListener('click', () => {
+        if (!currentCallsign) return showToast('Waiting for session...', 'info');
+        openCreateGroupModal();
     });
+
+    const groupCloseBtn = document.getElementById('group-modal-close');
+    if (groupCloseBtn) groupCloseBtn.addEventListener('click', closeGroupModal);
+
+    const groupForm = document.getElementById('group-form');
+    if (groupForm) groupForm.addEventListener('submit', handleCreateGroup);
+
+    const groupOverlay = document.getElementById('group-modal-overlay');
+    if (groupOverlay) {
+        groupOverlay.addEventListener('click', (e) => {
+            if (e.target === groupOverlay) closeGroupModal();
+        });
+    }
 }
 
 function openCreateGroupModal() {

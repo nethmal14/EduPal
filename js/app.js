@@ -30,19 +30,19 @@ onAuth(async (user) => {
     if (!currentCallsign) {
         console.error('[App] User logged in but no callsign found. Possible missing registration data.');
         showToast('Error: Callsign not found. Try re-logging.', 'error');
-        // await logout(); // Temporarily disable auto-logout to debug
         return;
     }
 
-    console.log(`[App] Welcome, ${currentCallsign}. Initializing modules...`);
+    console.log(`[App] Welcome, ${currentCallsign}. Updating UI...`);
     // Show callsign badge
     document.getElementById('user-callsign').textContent = currentCallsign;
-    document.getElementById('user-avatar').textContent = currentCallsign.slice(0, 2);
+    const avatar = document.getElementById('user-avatar');
+    if (avatar) avatar.textContent = currentCallsign.slice(0, 2);
 
     // Set online presence
     dbSetOnline(user.uid, currentCallsign);
 
-    // Init sub-modules
+    // Update sub-modules
     initChat(currentCallsign);
     initGroups(currentCallsign, (chatId) => {
         console.log(`[App] Group created: ${chatId}`);
@@ -53,6 +53,7 @@ onAuth(async (user) => {
 
     // Subscribe to sidebar chat list
     console.log('[App] Subscribing to user chats...');
+    if (unsubChats) unsubChats();
     unsubChats = subscribeToUserChats(currentCallsign, (chats) => {
         console.log(`[App] Received ${chats.length} chats for sidebar.`);
         renderSidebar(chats);
@@ -110,34 +111,64 @@ function updatePresenceUI() {
         }
     }
 }
+// ─── Event Listeners (Immediate) ──────────────────────────────────────────────
+
+console.log('[App] Initializing UI listeners...');
+
 // Logout button
-document.getElementById('btn-logout').addEventListener('click', async () => {
-    if (confirm('Sign out?')) await logout();
-});
+const logoutBtn = document.getElementById('btn-logout');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', async () => {
+        console.log('[App] Logout clicked');
+        if (confirm('Sign out?')) await logout();
+    });
+}
 
 // New DM button
-document.getElementById('btn-new-dm').addEventListener('click', openNewDMModal);
-document.getElementById('dm-modal-close').addEventListener('click', () =>
-    document.getElementById('dm-modal-overlay').classList.remove('active'));
-document.getElementById('dm-modal-overlay').addEventListener('click', (e) => {
-    if (e.target === document.getElementById('dm-modal-overlay'))
-        document.getElementById('dm-modal-overlay').classList.remove('active');
-});
+const newDmBtn = document.getElementById('btn-new-dm');
+if (newDmBtn) {
+    newDmBtn.addEventListener('click', () => {
+        console.log('[App] New DM clicked');
+        if (!currentCallsign) return showToast('Waiting for session...', 'info');
+        openNewDMModal();
+    });
+}
+
+const dmCancel = document.getElementById('dm-modal-close');
+if (dmCancel) {
+    dmCancel.addEventListener('click', () =>
+        document.getElementById('dm-modal-overlay').classList.remove('active'));
+}
+
+const dmOverlay = document.getElementById('dm-modal-overlay');
+if (dmOverlay) {
+    dmOverlay.addEventListener('click', (e) => {
+        if (e.target === dmOverlay) dmOverlay.classList.remove('active');
+    });
+}
 
 // Back button (mobile)
-document.getElementById('btn-back').addEventListener('click', closeChat);
+const backBtn = document.getElementById('btn-back');
+if (backBtn) backBtn.addEventListener('click', closeChat);
 
 // Members button
-document.getElementById('btn-members').addEventListener('click', () => {
-    const id = window._activeChatId;
-    if (id && currentChatData[id]) openMembersModal(currentChatData[id], currentCallsign);
-});
+const membersBtn = document.getElementById('btn-members');
+if (membersBtn) {
+    membersBtn.addEventListener('click', () => {
+        const id = window._activeChatId;
+        if (id && currentChatData[id]) openMembersModal(currentChatData[id], currentCallsign);
+    });
+}
 
 // Listen for openChat events (from notifications)
 window.addEventListener('openChat', (e) => {
     const { chatId } = e.detail;
     if (currentChatData[chatId]) activateChat(chatId);
 });
+
+// Initialize sub-modules without callsign (will re-init in onAuth)
+initChat(null);
+initGroups(null, (chatId) => console.log(`[App] Group created: ${chatId}`));
 
 
 // ─── Sidebar ─────────────────────────────────────────────────────────────────

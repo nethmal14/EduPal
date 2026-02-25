@@ -14,7 +14,13 @@ import {
 import { getDatabase, ref, get, set } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js';
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+let analytics = null;
+try {
+    analytics = getAnalytics(app);
+    console.log('[Auth] Analytics initialized.');
+} catch (e) {
+    console.warn('[Auth] Analytics failed to initialize (likely blocked):', e.message);
+}
 const auth = getAuth(app);
 const db = getDatabase(app);
 

@@ -11,20 +11,38 @@ let replyingTo = null;
 
 const EMOJIS = ['👍', '❤️', '😂', '😮', '😢', '🔥', '👏', '✅'];
 
-export function initChat(callsign) {
-    currentCallsign = callsign;
+let initialized = false;
 
-    document.getElementById('msg-input').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            handleSend();
-        } else {
-            setTyping(window._currentUid, currentChatId);
-        }
-    });
-    document.getElementById('btn-send').addEventListener('click', handleSend);
-    document.getElementById('cancel-reply').addEventListener('click', clearReply);
-    document.getElementById('msg-input').addEventListener('input', autoResize);
+export function initChat(callsign) {
+    if (callsign) {
+        console.log(`[Chat] Initializing with callsign: ${callsign}`);
+        currentCallsign = callsign;
+    }
+
+    if (initialized) return;
+    initialized = true;
+
+    console.log('[Chat] Attaching UI listeners...');
+    const msgInput = document.getElementById('msg-input');
+    if (msgInput) {
+        msgInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+            } else {
+                if (window._currentUid && currentChatId) {
+                    setTyping(window._currentUid, currentChatId);
+                }
+            }
+        });
+        msgInput.addEventListener('input', autoResize);
+    }
+
+    const sendBtn = document.getElementById('btn-send');
+    if (sendBtn) sendBtn.addEventListener('click', handleSend);
+
+    const cancelReplyBtn = document.getElementById('cancel-reply');
+    if (cancelReplyBtn) cancelReplyBtn.addEventListener('click', clearReply);
 }
 
 export function openChat(chatId, chatName, chatType, members) {
