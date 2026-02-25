@@ -163,17 +163,25 @@ export async function removeMember(chatId, requesterCallsign, targetCallsign) {
 }
 
 export function subscribeToUserChats(callsign, callback) {
+    console.log(`[DB] Subscribing to chats for ${callsign}...`);
     const chatsRef = ref(db, 'chats');
     onValue(chatsRef, (snap) => {
         const chats = [];
+        if (!snap.exists()) {
+            console.log('[DB] No chats found in database.');
+        }
         snap.forEach((child) => {
             const chat = child.val();
             if (chat.members && chat.members[callsign.toLowerCase()]) {
                 chats.push({ ...chat, id: child.key });
             }
         });
+        console.log(`[DB] Found ${chats.length} relevant chats for ${callsign}.`);
         chats.sort((a, b) => (b.lastMessageTime || 0) - (a.lastMessageTime || 0));
         callback(chats);
+    }, (error) => {
+        console.error('[DB] Error subscribing to chats:', error.message);
+        showToast('Database access denied. Check security rules.', 'error');
     });
     return () => off(chatsRef);
 }

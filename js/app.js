@@ -14,16 +14,27 @@ let unsubChats = null;
 // ─── Boot ────────────────────────────────────────────────────────────────────
 
 onAuth(async (user) => {
+    console.log('[App] Auth state changed:', user ? `UID: ${user.uid}` : 'No user');
     if (!user) {
-        window.location.href = '/index.html';
+        if (!window.location.pathname.endsWith('index.html')) {
+            console.log('[App] Redirecting to login...');
+            window.location.href = '/index.html';
+        }
         return;
     }
     currentUser = user;
     window._currentUid = user.uid;
 
+    console.log('[App] Fetching callsign for user...');
     currentCallsign = await getCurrentCallsign(user.uid);
-    if (!currentCallsign) { await logout(); return; }
+    if (!currentCallsign) {
+        console.error('[App] User logged in but no callsign found. Possible missing registration data.');
+        showToast('Error: Callsign not found. Try re-logging.', 'error');
+        // await logout(); // Temporarily disable auto-logout to debug
+        return;
+    }
 
+    console.log(`[App] Welcome, ${currentCallsign}. Initializing modules...`);
     // Show callsign badge
     document.getElementById('user-callsign').textContent = currentCallsign;
     document.getElementById('user-avatar').textContent = currentCallsign.slice(0, 2);
@@ -34,14 +45,18 @@ onAuth(async (user) => {
     // Init sub-modules
     initChat(currentCallsign);
     initGroups(currentCallsign, (chatId) => {
-        // After group created, it'll appear via subscribeToUserChats
+        console.log(`[App] Group created: ${chatId}`);
     });
 
     // Request notification permission
     await requestNotificationPermission();
 
     // Subscribe to sidebar chat list
-    unsubChats = subscribeToUserChats(currentCallsign, renderSidebar);
+    console.log('[App] Subscribing to user chats...');
+    unsubChats = subscribeToUserChats(currentCallsign, (chats) => {
+        console.log(`[App] Received ${chats.length} chats for sidebar.`);
+        renderSidebar(chats);
+    });
 
     // Subscribe to presence
     subscribeToPresence((presence) => {
@@ -130,8 +145,13 @@ window.addEventListener('openChat', (e) => {
 const lastSeenTime = {}; // chatId -> timestamp
 
 function renderSidebar(chats) {
+    console.log('[App] Rendering sidebar...');
     const dmList = document.getElementById('dm-list');
     const groupList = document.getElementById('group-list');
+    if (!dmList || !groupList) {
+        console.error('[App] Critical UI elements missing: #dm-list or #group-list');
+        return;
+    }
     dmList.innerHTML = '';
     groupList.innerHTML = '';
 
