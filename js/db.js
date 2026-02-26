@@ -220,8 +220,21 @@ export async function incrementUnread(chatId, callsign) {
     await set(unreadRef, current + 1);
 }
 
+export async function clearChat(chatId) {
+    await set(ref(db, `chats/${chatId}/messages`), null);
+    await update(ref(db, `chats/${chatId}`), {
+        lastMessage: '',
+        lastMessageFrom: null,
+        lastMessageTime: Date.now()
+    });
+}
+
+
+
+
 export function subscribeToUnread(chatId, callsign, callback) {
     const unreadRef = ref(db, `chats/${chatId}/unread/${callsign.toLowerCase()}`);
     onValue(unreadRef, (snap) => callback(snap.val() || 0));
     return () => off(unreadRef);
 }
+

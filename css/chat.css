@@ -395,6 +395,80 @@
     color: var(--text-primary);
 }
 
+
+/* ─── Topbar ··· More Menu ─────────────────────────────────────────────────── */
+.topbar-more-wrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
+#btn-more {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+}
+
+#btn-more:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.topbar-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 6px;
+    min-width: 160px;
+    box-shadow: var(--shadow);
+    z-index: 500;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.topbar-dropdown.open {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown-item:hover {
+    background: var(--bg-hover);
+}
+
+.dropdown-item.danger {
+    color: var(--red);
+}
+
+.dropdown-item.danger:hover {
+    background: rgba(255, 95, 95, 0.1);
+}
+
 @media (max-width: 680px) {
     .message-bubble {
         max-width: 85%;

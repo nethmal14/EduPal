@@ -1,5 +1,5 @@
 import { onAuth, logout, getCurrentCallsign } from './auth.js';
-import { subscribeToUserChats, createDM, setOnline as dbSetOnline, subscribeToPresence, setTyping } from './db.js';
+import { subscribeToUserChats, createDM, setOnline as dbSetOnline, subscribeToPresence, setTyping, clearChat } from './db.js';
 import { initChat, openChat, closeChat } from './chat.js';
 import { initGroups, openMembersModal } from './groups.js';
 import { setUnreadForChat, showToast, requestNotificationPermission, sendBrowserNotification } from './notifications.js';
@@ -159,6 +159,35 @@ if (membersBtn) {
         if (id && currentChatData[id]) openMembersModal(currentChatData[id], currentCallsign);
     });
 }
+
+// ··· More options button
+const moreBtn = document.getElementById('btn-more');
+const moreDropdown = document.getElementById('topbar-dropdown');
+if (moreBtn && moreDropdown) {
+    moreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        moreDropdown.classList.toggle('open');
+    });
+    document.addEventListener('click', () => moreDropdown.classList.remove('open'));
+}
+
+// Clear chat button
+const clearChatBtn = document.getElementById('btn-clear-chat');
+if (clearChatBtn) {
+    clearChatBtn.addEventListener('click', async () => {
+        moreDropdown.classList.remove('open');
+        const id = window._activeChatId;
+        if (!id) return;
+        if (!confirm('Clear all messages in this chat? This cannot be undone.')) return;
+        try {
+            await clearChat(id);
+            showToast('Chat cleared', 'info');
+        } catch (err) {
+            showToast('Failed to clear chat: ' + err.message, 'error');
+        }
+    });
+}
+
 
 // Listen for openChat events (from notifications)
 window.addEventListener('openChat', (e) => {
