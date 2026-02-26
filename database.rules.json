@@ -18,7 +18,7 @@
                 ".write": "auth != null && (data.child('members').child(root.child('profiles').child(auth.uid).child('callsign').val()).exists() || !data.exists())",
                 "messages": {
                     "$messageId": {
-                        ".write": "auth != null && data.child('members').child(root.child('profiles').child(auth.uid).child('callsign').val()).exists()"
+                        ".write": "auth != null && root.child('chats').child($chatId).child('members').child(root.child('profiles').child(auth.uid).child('callsign').val()).exists()"
                     }
                 }
             }

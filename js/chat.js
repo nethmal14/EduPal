@@ -46,8 +46,6 @@ export function initChat(callsign) {
 }
 
 export function openChat(chatId, chatName, chatType, members) {
-    if (currentChatId === chatId) return;
-
     // Unsubscribe from previous chat
     if (unsubscribeMessages) unsubscribeMessages();
     currentChatId = chatId;

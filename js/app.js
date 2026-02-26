@@ -1,4 +1,4 @@
-import { onAuth, logout, getCurrentCallsign, setOnline } from './auth.js';
+import { onAuth, logout, getCurrentCallsign } from './auth.js';
 import { subscribeToUserChats, createDM, setOnline as dbSetOnline, subscribeToPresence, setTyping } from './db.js';
 import { initChat, openChat, closeChat } from './chat.js';
 import { initGroups, openMembersModal } from './groups.js';
