@@ -16,8 +16,8 @@
             }
         },
         "chats": {
+            ".read": "auth != null",
             "$chatId": {
-                ".read": "auth != null && data.child('members').child(root.child('profiles').child(auth.uid).child('callsign').val()).exists()",
                 ".write": "auth != null && (data.child('members').child(root.child('profiles').child(auth.uid).child('callsign').val()).exists() || !data.exists())",
                 "messages": {
                     "$messageId": {
