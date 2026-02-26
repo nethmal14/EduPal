@@ -2,6 +2,9 @@
     "rules": {
         "users": {
             "$callsign": {
+                "passwordSet": {
+                    ".read": true
+                },
                 ".read": "auth != null",
                 ".write": "auth != null && (root.child('users').child($callsign).child('uid').val() === auth.uid || !data.exists())"
             }
