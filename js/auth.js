@@ -38,10 +38,7 @@ export async function isFirstLogin(callsign) {
         return first;
     } catch (e) {
         console.error(`[Auth] Error in isFirstLogin for ${callsign}:`, e);
-        // Default to false (returning user / login screen) to prevent
-        // always showing the registration flow when DB read fails.
-        // A new user will get auth/user-not-found on login attempt anyway.
-        return false;
+        return true; // Show create-password on genuine read failures
     }
 }
 
